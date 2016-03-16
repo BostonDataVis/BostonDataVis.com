@@ -1,0 +1,30 @@
+git_repo: git@github.com:BostonDataVis/bostondatavis.com.git
+base_path: /mnt
+site_path: "{{base_path}}/site"
+clone_path: "{{base_path}}/temp"
+public_path: "{{site_path}}/website"
+
+site_user: www-data
+site_group: www-data
+site_port: 8080
+site_log_file: /var/log/site
+
+users:
+  - name: ajpiano
+    state: present
+    real_name: adam j. sontag
+    shadow_pass: $6$rounds=100000$gJ5dfCfjy3DlFJ7C$FXP0bL.By3gLq811ygKd1eRJRavvBOEATx34PbTxyI8y9st3x0v6XnmERZoQ0tJdliMW18/jzbSJYm9IZvzwE/
+    public_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAu/7k6bSQ1EwLXyfZqM9tw7K/3WB4jIgIW2Jmb1rnGdqeJ7jX3ezAAPJEqoSwvGFZoTONC35OLnNvUwvfo/96Es/9q+qnZZMCnktAFamUlzdbyGudnMq7GkRqzdk9BhaaD5R5Pv0mVSvKMNxn3oVvdKmJpZK8NRpFkY0L3y2WcVp+KgH9ucdNN7bF9O9QZIGFhDEQBBwJYym7zwm9pERrZNoKN6NrLin+pCkZDohQMotxZmLySmCviaFFL9/HTm5GC+SoIr9s5CQFchHlrAWbDjnbpLnfz4dkFU1Ksg78c4saITgN7Zsn2EEI5ON/nJPLfoz1qRubrus4FHyX9QuGwQ== ajpiano@ajpiano.com
+  - name: iros
+    state: present
+    real_name: irene ros
+    shadow_pass: $1$2a0s6Vxl$a4sBNXOCvVfC5EHMBrAxv1
+    public_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAvpY8nBn34xoinXrgPG/j9q369PJYMI16ldVO2lyJJqP/b3TFc3FEd1IjUGihOAbljNu/bniIb733eVQAKSyFROusz5IbG2fIuAUdstDRe40oDnpinBZXgnvd9dR9sztttJ5Y9WjzcJrLmzT7AccJat0m9tWFlLpJJiFuntTEAZSNUagqh2X2E6aVYuxCbELtHIO/ztZf1g1RpToKHHoiY855t5sAK1DnIZKkCKxQxxq5XHxn4cqoPIUKAMX+Pzu3vLj+cOaJuMtjfQBOEHKklQ7zXoOQ1uZ3brWCTAuyYaG7CWW3XaNGYwa8kUlta1C13N0ZfaQdSTIRtTXMM8tNFw== iros@mini-me
+
+keys:
+  - user: iros
+    state: present
+    key: ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAvpY8nBn34xoinXrgPG/j9q369PJYMI16ldVO2lyJJqP/b3TFc3FEd1IjUGihOAbljNu/bniIb733eVQAKSyFROusz5IbG2fIuAUdstDRe40oDnpinBZXgnvd9dR9sztttJ5Y9WjzcJrLmzT7AccJat0m9tWFlLpJJiFuntTEAZSNUagqh2X2E6aVYuxCbELtHIO/ztZf1g1RpToKHHoiY855t5sAK1DnIZKkCKxQxxq5XHxn4cqoPIUKAMX+Pzu3vLj+cOaJuMtjfQBOEHKklQ7zXoOQ1uZ3brWCTAuyYaG7CWW3XaNGYwa8kUlta1C13N0ZfaQdSTIRtTXMM8tNFw== iros@mini-me
+

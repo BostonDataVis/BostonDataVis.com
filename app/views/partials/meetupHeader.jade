@@ -1,0 +1,9 @@
+h2.event
+  a(href="/events/#{meetup.index}") #{meetup.name}
+
+  span.meta
+    b.num ##{meetup.index} – #{moment(meetup.time + meetup.utc_offset).format("MMMM Do, YYYY @ h:mm a")}
+    if meetup && meetup.status == "past"
+      p.past (This meetup already happened)
+  
+  span.meta.venue Where: #{meetup.venue.name} - #{meetup.venue.address_1}, #{meetup.venue.city} #{meetup.venue.state}

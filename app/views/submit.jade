@@ -1,0 +1,52 @@
+extends layout
+
+block content
+  if submission
+    .submission-received
+      p Your submission, "#{submission.title}" was received. Check your e-mail for information on how to manage your proposal.
+  h2.title-hed Submit a Talk 
+  
+  p Submit your proposal to speak at Boston Data Vis! 
+  
+  p A proposal can be just a 4-5 sentence paragraph about the subject you want to discuss. Any reference materials you already 
+  have about this (links to live demos, existing presentations, videos etc.) would be very helpful!
+  
+  p We welcome - and encourage - folks with different levels of experience to submit talks! Even if you feel you are "new" or "just learning", consider submitting your idea, or talk to us at a meetup about it! We really believe that everyone in the community has something to offer everyone else in the community regardless of age, gender, race, sexual orientation, or skill level.
+
+  p Boston Data Vis expects all speakers and attendees to follow the 
+    a(href="http://bocoup.com/community/conduct") Bocoup Code of Conduct.
+  form(action='/submit-a-talk/', method='POST', name='submission', id='submisson-form')
+    h3.title-subhed About Your Talk
+    fieldset.info
+      .field
+        input#title.required(type='text', name='title', required='')
+        label(for='title') Proposed Title
+      .field
+        textarea#description.required(type='text', name='description', required='', rows=5)
+        label(for='description') Talk Description
+      .field
+        textarea#notes(type='text', name='notes', rows=4)
+        label(for='notes') Note to Organizers - please include any reference materials here!
+          span.note (Optional)
+    h3.title-subhed About You
+    fieldset.info
+      .field
+        input#name.required(type='text', name='name', required='')
+        label(for='name') Name
+      .field
+        input#email.required(type='email', name='email', required='')
+        label(for='email') Email
+      .field
+        input#website(type='text', name='website')
+        label(for='website') Website
+          span.note (Optional)
+      .field
+        input#company(type='text', name='company')
+        label(for='company') Company 
+          span.note (Optional)
+      .field
+        input#twitter(type='text', name='twitter')
+        label(for='twitter') Twitter
+          span.note (Optional)
+    button.btn(type='submit') Submit
+
