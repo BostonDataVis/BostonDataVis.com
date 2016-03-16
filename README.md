@@ -14,7 +14,7 @@ This is the www home of the [Boston Data Vis Meetup](http://meetup.com/bostondat
 
 #### 1. Get an API Key from Meetup.com
 
-  Visit https://secure.meetup.com/meetup_api/key/ and get your API Key. Cut and paste it into a file called `app/data/KEY.txt`. Save it and remove the extension so the file name is simply `KEY`.
+  Visit https://secure.meetup.com/meetup_api/key/ and get your API Key. Cut and paste it into a file called `app/data/KEY`.
 
 #### 2. Install Dependencies
 
