@@ -1,5 +1,6 @@
 extends layout
 
 block content
-  include ./partials/intro
+  if intro
+    include ./partials/intro
   include ./partials/meetup

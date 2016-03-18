@@ -172,7 +172,7 @@ h2.event {
 }
 .event .meta {
   font-family: Open Sans, sans-serif;
-  font-size: .5em;
+  font-size: .4em;
   display: block;
 }
 .event .meta.venue {
@@ -182,11 +182,8 @@ h2.event {
   font-size: 2.2em;
   margin-bottom: 1em;
 }
-.eventhead h2.event .meta {
-  font-size: .4em;
-}
+
 .event .num {
-  background: #ffeb94;
   display: inline-block;
   font-family: Klinik, serif;
   font-weight: bold;
@@ -194,7 +191,7 @@ h2.event {
   margin-bottom: .5em;
   padding: .1em .2em .2em .2em;
 }
-p.past {
+span.past {
   color: #C31212;
 }
 h2.event > a {
@@ -389,8 +386,5 @@ form button:hover {
     float: right;
     margin-top: 1.5em;
     margin-left: 3em;
-  }
-  h2.event {
-    width: 50%;
   }
 }

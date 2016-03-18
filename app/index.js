@@ -6,7 +6,11 @@ const nodemailer = require('nodemailer');
 const BODY_LIMIT = '500kb';
 
 var app = express();
-var transporter = nodemailer.createTransport();
+
+const config = require('./ses.json');
+const nodemailer = require('nodemailer');
+const sesTransport = require('nodemailer-ses-transport');
+
 var moment = app.locals.moment = require('moment');
 var meetups = _.map(require('./data/meetups').results, function(m, i) {
   m.index = i+1;
@@ -33,19 +37,22 @@ app.get('/', function(req, res){
   
   res.render('index', {
     meetup: meetup,
-    meetups: meetups
+    meetups: meetups,
+    intro: true
   });
 });
 
 app.get('/events/:index', function(req, res){
   res.render('index', {
     meetup: meetups[ req.params.index - 1],
-    meetups: meetups
+    meetups: meetups,
+    intro: false
   });
 });
 
 app.get('/events/', function(req, res){
   res.render('events', {
+    meetup: meetups[meetups.length-1],
     meetups: _.clone(meetups).reverse()
   });
 });
@@ -55,14 +62,19 @@ app.get('/submit-a-talk/', function(req, res){
 });
 
 app.post('/submit-a-talk/', function(req, res){
+  console.log("Posting things!")
+
   var form = req.body;
-  var destination = 'bocoup+38004@submissions.submittable.com'; 
+  var destination = 'bocoup+55896@submissions.submittable.com'; 
   var submissionContents = [
     '#name:' + form.name,
     '#email:' + form.email,
     '\n',
     '<strong>Description</strong>',
     form.description || '',
+    '\n',
+    '<strong>Notes</strong>',
+    form.notes || '',
     '\n',
     '/--JSON--/',
     JSON.stringify(form),

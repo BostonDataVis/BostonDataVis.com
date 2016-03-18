@@ -13,7 +13,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "ansible" do |ansible|
     ansible.verbose = 'vv'
     ansible.groups = {'localdev' => ['vagrant']}
-    ansible.playbook = 'deploy/ansible/provision.yml'
+    ansible.playbook = 'deploy/ansible/init-dev.yml'
   end
-
 end
