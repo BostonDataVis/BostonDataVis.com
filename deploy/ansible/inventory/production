@@ -1,4 +1,0 @@
-# Specify production app servers here. Once provisioning and deployment have
-# been tested locally or in staging, make changes "live" here.
-
-bostondatavis.com

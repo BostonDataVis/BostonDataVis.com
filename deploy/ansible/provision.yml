@@ -1,11 +1,115 @@
-# Provision server. This playbook must be run when a server is first created
-# and is typically only run once. It may be run again if you make server-level
-# changes or need to update any installed apt modules to their latest versions.
-# If you were creating a new AMI or base box, you'd do so after running only
-# this playbook.
-
 - hosts: all
   become: yes
   become_method: sudo
-  roles:
-    - {role: base, tags: base}
+  handlers:
+    - name: restart sshd
+      service: name=ssh state=restarted
+  tasks:
+    - name: add keys to apt
+      apt_key:
+        url: "{{item}}"
+        state: present
+      with_items: apt_keys
+
+    - name: add ppas to apt
+      apt_repository:
+        repo: "{{item}}"
+        state: present
+        update_cache: yes
+      with_items: apt_ppas
+
+    - name: install apt packages
+      apt:
+        name: "{{item}}"
+        state: latest
+        update_cache: yes
+      with_items: apt_packages
+
+    - name: ensure unattended upgrades are running
+      copy:
+        content: |
+          APT::Periodic::Update-Package-Lists "1";
+          APT::Periodic::Download-Upgradeable-Packages "1";
+          APT::Periodic::AutocleanInterval "7";
+          APT::Periodic::Unattended-Upgrade "1";
+        dest: /etc/apt/apt.conf.d/10periodic
+
+    - name: disallow password authentication
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        state: present
+        regexp: "^PasswordAuthentication"
+        line: "PasswordAuthentication no"
+      notify: restart sshd
+
+    - name: disallow challenge response authentication
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        state: present
+        regexp: "^ChallengeResponseAuthentication"
+        line: "ChallengeResponseAuthentication no"
+      notify: restart sshd
+
+    - name: ensure github.com is a known host
+      lineinfile:
+        dest: /etc/ssh/ssh_known_hosts
+        state: present
+        create: yes
+        regexp: "^github\\.com"
+        line: "{{ lookup('pipe', 'ssh-keyscan -t rsa github.com') }}"
+
+    - name: ensure nest.bocoup.com is a known host
+      lineinfile:
+        dest: /etc/ssh/ssh_known_hosts
+        state: present
+        create: yes
+        regexp: "^nest\\.bocoup\\.com"
+        line: "{{ lookup('pipe', 'ssh-keyscan -t rsa nest.bocoup.com') }}"
+
+    - name: ensure ssh agent socket environment variable persists when sudoing
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        insertafter: "^Defaults"
+        line: "Defaults\tenv_keep += \"SSH_AUTH_SOCK\""
+        validate: "visudo -cf %s"
+
+    - block:
+      - name: check if swap file exists
+        stat: path={{swap_file_path}}
+        register: swap_file_check
+
+      - name: ensure swapfile exists
+        command: fallocate -l {{swap_file_size}} /swap
+        when: not swap_file_check.stat.exists
+        args:
+          creates: "{{swap_file_path}}"
+
+      - name: ensure swap file has correct permissions
+        file: path={{swap_file_path}} owner=root group=root mode=0600
+
+      - name: ensure swapfile is formatted
+        command: mkswap {{swap_file_path}}
+        when: not swap_file_check.stat.exists
+
+      # the quotes around integers here can be removed when this is resolved
+      # https://github.com/ansible/ansible-modules-core/issues/1861
+      - name: ensure swap file can be mounted
+        mount:
+          name: none
+          src: "{{swap_file_path}}"
+          fstype: swap
+          opts: sw
+          passno: "0"
+          dump: "0"
+          state: present
+
+      - name: ensure swap is activited
+        command: swapon -a
+
+      - name: ensure swap is used as a last resort
+        sysctl:
+          name: vm.swappiness
+          value: 0
+
+      when: swap_file_path is defined and swap_file_size is defined
