@@ -41,8 +41,6 @@ site_group: www-data
 site_port: 8080
 site_log_file: /var/log/site
 
-
-
 #######
 # USERS
 #######

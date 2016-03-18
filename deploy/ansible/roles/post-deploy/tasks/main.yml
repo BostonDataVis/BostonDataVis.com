@@ -1,6 +1,6 @@
 # copy secrets files from nest to api/config
 - name: download all secret ses files from nest
-  shell: scp -3 -r {{secret_user}}@{{secret_server}}:/mnt/secrets/{{item.src}} {{item.dest}}/{{item.src}}
+  shell: scp -3 -r iros@nest.bocoup.com:/mnt/secrets/{{item.src}} {{item.dest}}/{{item.src}}
   with_items: secret_files
   tags: secrets
 

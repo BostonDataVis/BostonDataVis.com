@@ -7,6 +7,6 @@
   become: yes
   become_method: sudo
   roles:
-    - prod-deploy
+    - deploy-prod
     - services
     - post-deploy

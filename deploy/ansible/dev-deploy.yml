@@ -5,6 +5,6 @@
   become_method: sudo
   gather_facts: no
   roles:
-    - dev-deploy
+    - deploy-dev
     - services
     - post-deploy
