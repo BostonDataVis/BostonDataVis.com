@@ -4,4 +4,4 @@
 - hosts: all
 - include: provision.yml
 - include: configure.yml
-- include: development.yml
+- include: dev-depoly.yml
