@@ -1,14 +1,11 @@
-# provision machine and deploy code
+# Provision server. This playbook must be run when a server is first created
+# and is typically only run once. It may be run again if you make server-level
+# changes or need to update any installed apt modules to their latest versions.
+# If you were creating a new AMI or base box, you'd do so after running only
+# this playbook.
 
 - hosts: all
-  gather_facts: false
-  sudo: yes
+  become: yes
+  become_method: sudo
   roles:
-    - base
-    - configure
-    - nginx
-    - services
-  handlers:
-    - include: handlers/handlers.yml
-
-- include: deploy.yml
+    - {role: base, tags: base}

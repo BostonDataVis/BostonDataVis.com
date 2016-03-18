@@ -1,0 +1,10 @@
+# Configure vagrant for running locally.
+
+- hosts: vagrant
+  become: yes
+  become_method: sudo
+  gather_facts: no
+  roles:
+    - dev-deploy
+    - services
+    - post-deploy

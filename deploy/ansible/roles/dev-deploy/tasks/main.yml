@@ -1,0 +1,7 @@
+- name: get site path status
+  stat: path={{site_path}}
+  register: site_present
+
+- name: link vagrant synced directory to make it live
+  file: path={{site_path}} state=link src={{synced_folder}} force=yes
+  when: site_present.stat.islnk is not defined

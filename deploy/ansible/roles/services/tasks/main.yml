@@ -1,2 +1,4 @@
 - name: site daemon is loaded
   template: src=site.conf dest=/etc/init/ backup=no
+  notify: restart site
+

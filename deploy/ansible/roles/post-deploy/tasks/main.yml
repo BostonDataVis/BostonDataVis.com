@@ -1,0 +1,11 @@
+# copy secrets files from nest to api/config
+- name: download all secret ses files from nest
+  shell: scp -3 -r {{secret_user}}@{{secret_server}}:/mnt/secrets/{{item.src}} {{item.dest}}/{{item.src}}
+  with_items: secret_files
+  tags: secrets
+
+- name: restart site
+  service: name=site state=restarted
+
+- name: restart nginx
+  service: name=nginx state=restarted
