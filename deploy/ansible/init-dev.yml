@@ -1,7 +1,0 @@
-# This playbook saves the trouble of running each of the following playbooks
-# individually, and is provided for convenience.
-
-- hosts: all
-- include: provision.yml
-- include: configure.yml
-- include: dev-deploy.yml
